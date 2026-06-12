@@ -1,12 +1,37 @@
-<h1>Products</h1>
-
-<%= link_to "New product", new_product_path if authenticated? %>
-<%= link_to "Login", new_session_path unless authenticated? %>
-
-<div id="products">
-  <% @products.each do |product| %>
-    <div>
-      <%= link_to product.title, product_path(product.id) %>
-    </div>
+<h1 class="mb-4">Products</h1>
+<button class="btn btn-primary">Test</button>
+<div class="mb-4">
+  <% if authenticated? %>
+    <%= link_to "New Product", new_product_path, class: "btn btn-primary" %>
+  <% else %>
+    <%= link_to "Login", new_session_path, class: "btn btn-outline-primary" %>
   <% end %>
+</div>
+
+<div class="container">
+  <div class="row">
+    <% @products.each do |product| %>
+      <div class="col-md-4 mb-4">
+        <div class="card w-20">
+          <% if product.thumbnail.present? %>
+            <%= image_tag product.thumbnail,
+                          class: "card-img-top",
+                          style: "height: 250px; object-fit: cover;" %>
+          <% end %>
+
+          <div class="card-body">
+            <h5 class="card-title"><%= product.title %></h5>
+
+            <p class="card-text">
+              ₹<%= product.price %>
+            </p>
+
+            <%= link_to "View",
+                        product_path(product),
+                        class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
