@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_09_101355) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_12_110423) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -49,11 +49,66 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_09_101355) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "products", force: :cascade do |t|
+  create_table "categories", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.integer "inventory_count", default: 0
     t.string "name"
+    t.string "slug"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "product_dimensions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.decimal "depth"
+    t.decimal "height"
+    t.integer "product_id", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "width"
+    t.index ["product_id"], name: "index_product_dimensions_on_product_id"
+  end
+
+  create_table "product_images", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "image_url"
+    t.integer "product_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_images_on_product_id"
+  end
+
+  create_table "product_tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "product_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_tags_on_product_id"
+    t.index ["tag_id"], name: "index_product_tags_on_tag_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "availability_status"
+    t.string "brand"
+    t.integer "category_id"
+    t.datetime "created_at", null: false
+    t.decimal "discount_percentage", precision: 5, scale: 2
+    t.integer "inventory_count", default: 0
+    t.decimal "price", precision: 10, scale: 2
+    t.string "sku"
+    t.string "thumbnail"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.decimal "weight"
+    t.index ["category_id"], name: "index_products_on_category_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.integer "product_id", null: false
+    t.integer "rating"
+    t.datetime "reviewed_at"
+    t.string "reviewer_email"
+    t.string "reviewer_name"
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_reviews_on_product_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -73,6 +128,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_09_101355) do
     t.index ["product_id"], name: "index_subscribers_on_product_id"
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email_address", null: false
@@ -83,6 +144,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_09_101355) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "product_dimensions", "products"
+  add_foreign_key "product_images", "products"
+  add_foreign_key "product_tags", "products"
+  add_foreign_key "product_tags", "tags"
+  add_foreign_key "products", "categories"
+  add_foreign_key "reviews", "products"
   add_foreign_key "sessions", "users"
   add_foreign_key "subscribers", "products"
 end
