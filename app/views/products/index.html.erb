@@ -1,37 +1,81 @@
-<h1 class="mb-4">Products</h1>
-<button class="btn btn-primary">Test</button>
 <div class="mb-4">
   <% if authenticated? %>
     <%= link_to "New Product", new_product_path, class: "btn btn-primary" %>
-  <% else %>
-    <%= link_to "Login", new_session_path, class: "btn btn-outline-primary" %>
   <% end %>
 </div>
 
 <div class="container">
   <div class="row">
     <% @products.each do |product| %>
-      <div class="col-md-4 mb-4">
-        <div class="card w-20">
-          <% if product.thumbnail.present? %>
-            <%= image_tag product.thumbnail,
-                          class: "card-img-top",
-                          style: "height: 250px; object-fit: cover;" %>
+      <div class="col-lg-4 col-md-6 mb-4">
+  <div class="card h-100 shadow-sm">
+
+    <%= link_to product_path(product),
+                class: "text-decoration-none text-dark" do %>
+
+      <% if product.thumbnail.present? %>
+        <div class="product-image-container">
+          <%= image_tag product.thumbnail,
+                        class: "card-img-top" %>
+        </div>
+      <% end %>
+
+      <div class="card-body">
+        <h5 class="card-title">
+          <%= truncate(product.title, length: 50) %>
+        </h5>
+
+        <p class="card-text product-description">
+          <%= truncate(product.description.to_plain_text, length: 80) %>
+        </p>
+
+        <% avg_rating = product.reviews.average(:rating)&.round(1) || 0 %>
+
+        <div class="product-rating"
+            data-bs-toggle="popover"
+            data-bs-trigger="hover focus"
+            data-bs-html="true"
+            title="Customer Reviews"
+            data-bs-content="
+              <%=
+                product.reviews.limit(3).map do |review|
+                  "#{review.rating}★ - #{ERB::Util.html_escape(review.comment)}"
+                end.join('<br><br>')
+              %>
+            ">
+
+          <% 5.times do |i| %>
+            <% if i < avg_rating.round %>
+              <span class="star filled">★</span>
+            <% else %>
+              <span class="star">★</span>
+            <% end %>
           <% end %>
 
-          <div class="card-body">
-            <h5 class="card-title"><%= product.title %></h5>
-
-            <p class="card-text">
-              ₹<%= product.price %>
-            </p>
-
-            <%= link_to "View",
-                        product_path(product),
-                        class: "btn btn-primary" %>
-          </div>
+          <span class="rating-count">
+            (<%= product.reviews.count %>)
+          </span>
         </div>
+
+        <p class="fw-bold">₹<%= product.price %></p>
+
+        <% if product.discount_percentage.present? %>
+          <span class="badge bg-success">
+            <%= product.discount_percentage %>% OFF
+          </span>
+        <% end %>
       </div>
+
+    <% end %>
+
+    <div class="card-footer bg-white border-0 mt-auto">
+      <button class="btn btn-primary w-100">
+        Add to Cart
+      </button>
+    </div>
+
+  </div>
+</div>
     <% end %>
   </div>
 </div>

@@ -4,4 +4,7 @@ import "controllers"
 
 import "trix"
 import "@rails/actiontext"
-// import * as bootstrap from "bootstrap"
+import * as bootstrap from "bootstrap"
+
+window.bootstrap = bootstrap
+import "product_popovers"
