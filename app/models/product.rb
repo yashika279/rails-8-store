@@ -1,8 +1,13 @@
 class Product < ApplicationRecord
   has_rich_text :description
-  validates :name, presence: true
 
-  has_many :product_images
+  belongs_to :category
+  has_one :product_dimension, dependent: :destroy
+  has_many :product_images, dependent: :destroy
+  has_many :reviews, dependent: :destroy
+
+  has_many :product_tags, dependent: :destroy
+  has_many :tags, through: :product_tags
   validates :inventory_count, numericality: { greater_than_or_equal_to: 0 }
 
   has_many :subscribers, dependent: :destroy
