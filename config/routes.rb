@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   end
   resource :unsubscribe, only: [ :show ]
 
+  resources :registrations, only: [:new, :create]
+
   root "products#index"
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
