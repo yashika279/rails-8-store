@@ -8,6 +8,8 @@ class Product < ApplicationRecord
 
   has_many :product_tags, dependent: :destroy
   has_many :tags, through: :product_tags
+  has_many :cart_items, dependent: :destroy
+
   validates :inventory_count, numericality: { greater_than_or_equal_to: 0 }
 
   has_many :subscribers, dependent: :destroy
