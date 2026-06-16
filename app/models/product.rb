@@ -23,4 +23,15 @@ class Product < ApplicationRecord
       ProductMailer.with(product: self, subscriber: subscriber).in_stock.deliver_later
     end
   end
+
+  searchkick
+
+  def search_data
+    {
+      title: title,
+      description: description,
+      category: category,
+      price: price
+    }
+  end
 end

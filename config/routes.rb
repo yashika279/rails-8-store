@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :registrations, only: [:new, :create]
 
   root "products#index"
+  get "/search", to: "products#search"
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

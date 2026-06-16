@@ -21,6 +21,15 @@
       </ul>
 
       <div class="d-flex">
+        <%= form_with url: search_path, method: :get, local: true, class: "d-flex" do %>
+          <%= search_field_tag :query,
+                              params[:query],
+                              placeholder: "Search products...",
+                              class: "form-control me-2" %>
+
+          <%= submit_tag "Search", class: "btn btn-primary" %>
+        <% end %>
+
         <% if authenticated? %>
           <%= button_to "Logout",
                         session_path,

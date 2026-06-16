@@ -30,6 +30,8 @@ gem "solid_cable"
 gem "bootstrap", "~> 5.3"
 gem "dartsass-rails"
 gem "rolify"
+gem "searchkick"
+gem "opensearch-ruby"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false

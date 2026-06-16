@@ -38,6 +38,15 @@ class ProductsController < ApplicationController
     redirect_to products_path
   end
 
+  def search
+    if params[:query].present?
+      @products = Product.search(params[:query])
+    else
+      @products = Product.all
+    end
+    render :index
+  end
+
   private
 
     def set_product

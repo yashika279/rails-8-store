@@ -119,6 +119,12 @@ GEM
     erubi (1.13.1)
     et-orbi (1.4.0)
       tzinfo
+    faraday (2.14.2)
+      faraday-net_http (>= 2.0, < 3.5)
+      json
+      logger
+    faraday-net_http (3.4.4)
+      net-http (~> 0.5)
     ffi (1.17.4-x86_64-linux-gnu)
     fugit (1.12.1)
       et-orbi (~> 1.4)
@@ -179,6 +185,9 @@ GEM
       drb (~> 2.0)
       prism (~> 1.5)
     msgpack (1.8.0)
+    multi_json (1.21.1)
+    net-http (0.9.1)
+      uri (>= 0.11.1)
     net-imap (0.6.4)
       date
       net-protocol
@@ -196,6 +205,9 @@ GEM
     nio4r (2.7.5)
     nokogiri (1.19.3-x86_64-linux-gnu)
       racc (~> 1.4)
+    opensearch-ruby (3.4.0)
+      faraday (>= 1.0, < 3)
+      multi_json (>= 1.0)
     ostruct (0.6.3)
     parallel (1.28.0)
     parser (3.3.11.1)
@@ -302,6 +314,8 @@ GEM
     rubyzip (3.3.0)
     sass-embedded (1.101.0-x86_64-linux-gnu)
       google-protobuf (~> 4.31)
+    searchkick (6.1.2)
+      activemodel (>= 7.2)
     securerandom (0.4.1)
     selenium-webdriver (4.43.0)
       base64 (~> 0.2)
@@ -379,11 +393,13 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kamal
+  opensearch-ruby
   propshaft
   puma (>= 5.0)
   rails (~> 8.1.0)
   rolify
   rubocop-rails-omakase
+  searchkick
   selenium-webdriver
   solid_cable
   solid_cache
