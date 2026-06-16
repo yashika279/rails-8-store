@@ -1,0 +1,24 @@
+<div class="list-group">
+
+  <%= link_to "Security",
+              edit_profile_path,
+              class: "list-group-item list-group-item-action" %>
+
+  <%= link_to "Addresses",
+              "#",
+              class: "list-group-item list-group-item-action" %>
+
+  <%= link_to "Orders",
+              "#",
+              class: "list-group-item list-group-item-action" %>
+
+  <%= link_to "Wish-List",
+              "#",
+              class: "list-group-item list-group-item-action" %>
+
+  <%= button_to "Logout",
+                session_path,
+                method: :delete,
+                class: "list-group-item list-group-item-action btn btn-link text-start" %>
+
+</div>

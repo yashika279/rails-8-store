@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-md-3">
+    <%= render "sidebar" %>
+  </div>
+
+  <div class="col-md-9">
+    <h3>My Profile</h3>
+
+    <p>
+      <strong>Email:</strong>
+      <%= @user.email_address %>
+    </p>
+
+    <%= link_to "Edit Profile",
+                edit_profile_path,
+                class: "btn btn-primary" %>
+  </div>
+</div>

@@ -31,10 +31,9 @@
         <% end %>
 
         <% if authenticated? %>
-          <%= button_to "Logout",
-                        session_path,
-                        method: :delete,
-                        class: "btn btn-outline-light" %>
+          <%= link_to profile_path do %>
+            <i class="bi bi-person-circle fs-4 ml-5"></i>
+          <% end %>
         <% else %>
           <%= link_to "Login",
                       new_session_path,
