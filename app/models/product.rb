@@ -36,4 +36,8 @@ class Product < ApplicationRecord
       price: price
     }
   end
+
+  def discounted_price
+    price - (price * discount_percentage / 100.0)
+  end
 end

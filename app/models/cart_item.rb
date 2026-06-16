@@ -11,6 +11,6 @@ class CartItem < ApplicationRecord
             }
 
   def subtotal
-    quantity * product.price
+    quantity * product.discounted_price
   end
 end

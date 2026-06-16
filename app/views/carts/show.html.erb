@@ -1,0 +1,93 @@
+<% if @cart.present? && @cart.cart_items.any? %>
+
+  <% @cart.cart_items.each do |cart_item| %>
+    <div class="card mb-3">
+      <div class="row g-0">
+
+
+        <div class="col-md-3 text-center p-3">
+          <%= image_tag cart_item.product.thumbnail,
+                        class: "img-fluid rounded" %>
+        </div>
+
+        <div class="col-md-9">
+          <div class="card-body">
+
+            <h5 class="card-title">
+              <%= cart_item.product.title %>
+            </h5>
+
+            <p class="card-text text-muted">
+              <%= truncate(
+                cart_item.product.description.to_plain_text,
+                length: 150
+              ) %>
+            </p>
+
+            <div class="mb-2">
+              <span class="h5">
+                ₹<%= cart_item.product.discounted_price.round(2) %>
+              </span>
+
+              <span class="text-decoration-line-through text-muted ms-2">
+                ₹<%= cart_item.product.price %>
+              </span>
+
+              <span class="text-success ms-2">
+                <%= cart_item.product.discount_percentage.to_i %>% OFF
+              </span>
+            </div>
+
+            <p class="text-success fw-bold">
+              In Stock
+            </p>
+
+            <div class="d-flex align-items-center mb-3">
+              <label class="me-2">Qty</label>
+
+              <%= number_field_tag :quantity,
+                                  cart_item.quantity,
+                                  min: 1,
+                                  class: "form-control w-auto" %>
+            </div>
+
+            <div class="d-flex gap-3">
+              <%= link_to "Delete",
+                          cart_item_path(cart_item),
+                          data: { turbo_method: :delete } %>
+
+              <%= link_to "Save for Later", "#" %>
+
+              <%= link_to "More Like This", "#" %>
+
+              <%= link_to "Share", "#" %>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <div class="card-body">
+      <h5>Price Details</h5>
+
+      <hr>
+
+      <p>
+        Total Items:
+        <%= @cart.cart_items.sum(:quantity) %>
+      </p>
+
+      <p>
+        Total:
+        ₹<%= @cart.total_amount %>
+      </p>
+
+      <%= button_to "Proceed to Buy",
+                    '#',
+                    method: :post,
+                    class: "btn btn-warning w-100" %>
+    </div>
+<% else %>
+  Your Store Cart is empty
+<% end%>
