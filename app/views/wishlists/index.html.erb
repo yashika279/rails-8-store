@@ -1,0 +1,65 @@
+<% if @wishlists.present? %>
+
+  <% @wishlists.each do |wishlist| %>
+    <div id="<%= dom_id(wishlist) %>">
+
+      <div class="card mb-3">
+        <div class="row g-0">
+
+
+          <div class="col-md-3 text-center p-3">
+            <%= image_tag wishlist.product.thumbnail,
+                          class: "img-fluid rounded" %>
+          </div>
+
+          <div class="col-md-9">
+            <div class="card-body">
+
+              <h5 class="card-title">
+                <%= wishlist.product.title %>
+              </h5>
+
+              <p class="card-text text-muted">
+                <%= truncate(
+                  wishlist.product.description.to_plain_text,
+                  length: 150
+                ) %>
+              </p>
+
+              <div class="mb-2">
+                <span class="h5">
+                  ₹<%= wishlist.product.discounted_price.round(2) %>
+                </span>
+
+                <span class="text-decoration-line-through text-muted ms-2">
+                  ₹<%= wishlist.product.price %>
+                </span>
+
+                <span class="text-success ms-2">
+                  <%= wishlist.product.discount_percentage.to_i %>% OFF
+                </span>
+              </div>
+
+            
+              <div class="d-flex gap-3">
+              <%= button_to "Delete",
+                wishlist_path(wishlist),
+                method: :delete,
+                class: "btn btn-danger btn-sm" %>
+
+              <%= button_to "Move to Cart",
+              move_to_cart_wishlist_path(wishlist),
+              method: :post,
+              class: "btn btn-primary" %>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  Your Store Wishlists is empty
+<% end%>

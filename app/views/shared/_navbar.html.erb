@@ -44,6 +44,19 @@
 
           <% end %>
 
+          <li class="nav-item">
+            <%= link_to wishlists_path, class: "nav-link position-relative" do %>
+              <i class="bi bi-heart"></i>
+              Wishlist
+
+              <% if authenticated? && current_user.wishlists.any? %>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  <%= current_user.wishlists.count %>
+                </span>
+              <% end %>
+            <% end %>
+          </li>
+
           <%= link_to profile_path do %>
             <i class="bi bi-person-circle fs-4 ml-5"></i>
           <% end %>

@@ -59,7 +59,10 @@
                 method: :delete,
                 class: "btn btn-danger btn-sm" %>
 
-                <%= link_to "Save for Later", "#" %>
+              <%= button_to "Save for Later",
+                            wishlists_path(cart_item_id: cart_item.id),
+                            method: :post,
+                            form: { data: { turbo: true } } %>
 
                 <%= link_to "More Like This", "#" %>
 
