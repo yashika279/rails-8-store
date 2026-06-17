@@ -20,4 +20,14 @@ class CartItemsController < ApplicationController
                     alert: "Unable to add product"
     end
   end
+
+  def destroy
+    cart_item = CartItem.find(params[:id])
+    cart_item.destroy
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to cart_path}
+    end
+  end
 end
