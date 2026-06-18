@@ -47,10 +47,12 @@
               <div class="d-flex align-items-center mb-3">
                 <label class="me-2">Qty</label>
 
-                <%= number_field_tag :quantity,
-                                    cart_item.quantity,
+                <%= form_with model: cart_item, local: false do |f| %>
+                  <%= f.number_field :quantity,
                                     min: 1,
-                                    class: "form-control w-auto" %>
+                                    class: "form-control w-auto",
+                                    onchange: "this.form.requestSubmit()" %>
+                <% end %>
               </div>
 
               <div class="d-flex gap-3">

@@ -5,6 +5,8 @@ class Cart < ApplicationRecord
            through: :cart_items
 
   def total_amount
-    cart_items.sum(&:subtotal)
+    cart_items.includes(:product).sum do |item|
+      item.product.discounted_price * item.quantity
+    end
   end
 end

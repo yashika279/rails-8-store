@@ -30,4 +30,16 @@ class CartItemsController < ApplicationController
       format.html { redirect_to cart_path}
     end
   end
+
+  def update
+    @cart_item = CartItem.find(params[:id])
+    @cart_item.update!(quantity: params[:cart_item][:quantity])
+
+    @cart = @cart_item.cart
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to cart_path }
+    end
+  end
 end
