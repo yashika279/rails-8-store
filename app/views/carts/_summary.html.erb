@@ -12,7 +12,6 @@
   ₹<%= cart.total_amount %>
 </p>
 
-<%= button_to "Proceed to Buy",
-              '#',
-              method: :post,
-              class: "btn btn-warning w-100" %>
+<%= link_to "Proceed to Buy",
+            new_order_path,
+            class: "btn btn-warning w-100" %>

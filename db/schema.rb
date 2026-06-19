@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_18_120447) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_19_074607) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -89,6 +89,33 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_18_120447) do
     t.string "name"
     t.string "slug"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "order_id", null: false
+    t.decimal "price"
+    t.integer "product_id", null: false
+    t.integer "quantity"
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["product_id"], name: "index_order_items_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "shipping_address_line_1"
+    t.string "shipping_address_line_2"
+    t.string "shipping_city"
+    t.string "shipping_name"
+    t.string "shipping_phone"
+    t.string "shipping_postal_code"
+    t.string "shipping_state"
+    t.string "status"
+    t.decimal "total_amount"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "product_dimensions", force: :cascade do |t|
@@ -212,6 +239,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_18_120447) do
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "products"
   add_foreign_key "carts", "users"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "products"
+  add_foreign_key "orders", "users"
   add_foreign_key "product_dimensions", "products"
   add_foreign_key "product_images", "products"
   add_foreign_key "product_tags", "products"

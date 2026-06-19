@@ -1,0 +1,38 @@
+<h1>My Orders</h1>
+
+<% if @orders.present? %>
+  <% @orders.each do |order| %>
+
+    <div class="card mb-3">
+
+      <div class="card-body">
+
+        <h5>
+          Order #<%= order.id %>
+        </h5>
+
+        <p>
+          <%= order.created_at.strftime("%d %b %Y") %>
+        </p>
+
+        <p>
+          ₹<%= order.total_amount %>
+        </p>
+
+        <p>
+          <%= order.status.titleize %>
+        </p>
+
+        <%= link_to "View Details",
+                    order_path(order),
+                    class: "btn btn-primary" %>
+
+      </div>
+
+    </div>
+
+  <% end %>
+<% else %>
+  No Orders yet!
+  <%= link_to "Browse Products", root_path%>
+<% end %>

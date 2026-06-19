@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :sessions, dependent: :destroy
   has_many :wishlists, dependent: :destroy
   has_many :addresses, dependent: :destroy
+  has_many :orders
 
   has_one :cart, dependent: :destroy
 
